@@ -27,10 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(
           child:Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("LOGO",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 40)),
-              SizedBox(height: 50),
-              CircularProgressIndicator()
+            children:  [
+              Image.asset('lib/asset/leaves.png',fit: BoxFit.cover,height: 100,width: 100,),
+              const SizedBox(height: 50),
+              const CircularProgressIndicator()
             ],
           )
 
