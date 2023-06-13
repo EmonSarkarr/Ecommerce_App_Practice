@@ -16,6 +16,9 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final fullNameController = TextEditingController();
+  bool isLogin = false;
+
+  final form_key=GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -29,130 +32,141 @@ class _LoginPageState extends State<LoginPage> {
     size =  MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text('L O G I N      P A G E')),
+        //appBar: AppBar(centerTitle: true, title: const Text('L O G I N      P A G E')),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                height: size.height / 7,
-                width: size.width / 3,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/asset/leaves.png'),
-                    fit: BoxFit.cover,
-                  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: size.height / 7,
+              width: size.width / 3,
+              decoration:  BoxDecoration(
+                borderRadius: BorderRadiusDirectional.circular(70),
+                image: DecorationImage(
+                  image: AssetImage('lib/asset/leaves.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
-              const Text(
-                "Login",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "Login",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: TextField(
+                onTap: () {},
+                controller:emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    prefixIcon: Icon(Icons.email),
+                    hintText: "Enter Your Email or Password",
+                    labelText: "Email or PhoneNumber"),
               ),
-              const SizedBox(
-                height: 50,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: TextField(
+                onTap: () {},
+               controller: passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    prefixIcon: const Icon(Icons.password),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          passwordController.clear();
+                        },
+                        icon: const Icon(Icons.cancel)),
+                    hintText: "Enter Your Password",
+                    labelText: "Password"),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  onTap: () {},
-                  controller:emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                      prefixIcon: Icon(Icons.email),
-                      hintText: "Enter Your Email or Password",
-                      labelText: "Email or PhoneNumber"),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  onTap: () {},
-                 controller: passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                      prefixIcon: const Icon(Icons.password),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                          //  passwordController.clear();
-                          },
-                          icon: const Icon(Icons.cancel)),
-                      hintText: "Enter Your Password",
-                      labelText: "Password"),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage()) );
-                // Navigator.pushNamed(context,HomePage.routeName);
-                },
-                child: Container(
-                  height: 60,
-                  width: size.width / 1.2,
-                  child: Center(
-                    child: Text("Login",
-                        style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text("",
-                  style: TextStyle(color: Colors.red)),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            InkWell(
+              onTap: () {
 
-              const SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: (){
-                  Navigator.pushNamed(context, SignupPage.routeName);
-                },
-                child: RichText(
+                  isLogin = true;
+                  authenticate();
 
-                    text: const TextSpan(
-                        text: "New user?",
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        children: [
-                          TextSpan(
-                              text: "Are you want to",
-                              style: TextStyle(fontSize: 20, color: Colors.black)),
-                          TextSpan(
-                              text: 'Register',
-                              style: TextStyle(color: Colors.green, fontSize: 25))
-                        ])),
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage()) );
+
+              },
+              child: Container(
+                height: 60,
+                width: size.width / 2,
+                child:  Center(
+                  child: Text("Login",
+                      style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text("",
+                style: TextStyle(color: Colors.red)),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: (){
+                authenticate();
+                Navigator.pushNamed(context, SignupPage.routeName);
+              },
+              child: RichText(
+
+                  text: const TextSpan(
+                      text: "New user?",
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text: "Are you want to",
+                            style: TextStyle(fontSize: 20, color: Colors.black)),
+                        TextSpan(
+                            text: 'Register',
+                            style: TextStyle(color: Colors.green, fontSize: 25))
+                      ])),
+            ),
+          ],
         ),
       ),
       ),
     );
+  }
+
+  void authenticate() async {
+
+
   }
 }

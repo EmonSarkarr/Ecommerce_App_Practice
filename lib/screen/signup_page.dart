@@ -25,14 +25,17 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: size.height / 5,
               width: size.width / 2,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
+                borderRadius: BorderRadius.circular(70),
                 image: DecorationImage(
                   image: AssetImage('lib/asset/leaves.png'),
                   fit: BoxFit.fill,
@@ -50,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
               height: 50,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 20,right: 20),
               child: TextField(
                 onTap: () {},
                 controller: emailController,
@@ -64,11 +67,9 @@ class _SignupPageState extends State<SignupPage> {
                     labelText: "Email or PhoneNumber"),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+          
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 15),
               child: TextField(
                 onTap: () {},
                 controller: passwordController,
@@ -88,7 +89,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 15),
               child: TextField(
                 onTap: () {},
                 controller: fullNameController,
@@ -103,7 +104,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             InkWell(
               onTap: () {
@@ -111,7 +112,7 @@ class _SignupPageState extends State<SignupPage> {
               },
               child: Container(
                 height: 60,
-                width: size.width / 1.2,
+                width: size.width / 2,
                 child: Center(
                   child: Text("Register",
                       style: TextStyle(
@@ -124,10 +125,8 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(20)),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-           
+
+
           ],
         ),
       ),
